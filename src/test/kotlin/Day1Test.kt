@@ -1,21 +1,43 @@
-/**
- * Goal is to split the string input into groups, and find the highest group sum amongst the groups
- * https://adventofcode.com/2022/day/1
- */
-fun day1Task1 (): Int {
+import org.junit.jupiter.api.Test
 
-    return Day1Task1.input.split("\n\n").maxOf {
-        sumGroup(it)
+import org.junit.jupiter.api.Assertions.*
+
+class Day1Test {
+
+    @Test
+    fun `day 1 task 1 test`() {
+
+        assertEquals(24000, day1Task1(Inputs.testInput))
+
+        assertEquals(73211, day1Task1(Inputs.realInput))
+    }
+
+    @Test
+    fun `day 1 task 2 test`() {
+
+        assertEquals(45000, day1Task2(Inputs.testInput))
+
+        assertEquals(213958, day1Task2(Inputs.realInput))
     }
 }
 
-fun sumGroup(input: String): Int {
-    return input.split("\n").sumOf { it.toInt() }
-}
+object Inputs {
+    const val testInput = """1000
+2000
+3000
 
-object Day1Task1 {
+4000
 
-    const val input = """9524
+5000
+6000
+
+7000
+8000
+9000
+
+10000"""
+
+    const val realInput ="""9524
 12618
 6755
 2121
