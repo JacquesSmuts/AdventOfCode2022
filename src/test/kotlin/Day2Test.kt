@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Assertions.*
 class Day2Test {
 
     @Test
-    fun `day 1 task 1 test`() {
+    fun `day 2 task 1 test`() {
 
         assertEquals(15, day2Task1(Day2Inputs.testInput))
 
@@ -14,7 +14,7 @@ class Day2Test {
     }
 
     @Test
-    fun `day 1 task 2 test`() {
+    fun `day 2 task 2 test`() {
 
         assertEquals(12, day2Task2(Day2Inputs.testInput))
 

@@ -68,6 +68,7 @@ fun day2Task2(input: String): Int {
         }
 
 }
+
 /**
  * @return Victory score + the value of the input
  */
