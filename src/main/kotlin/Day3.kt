@@ -1,5 +1,3 @@
-import java.lang.IllegalArgumentException
-
 /**
  * https://adventofcode.com/2022/day/3
  */
@@ -40,17 +38,9 @@ fun priorityValueOfChar(matchingChar: Char): Int {
 
 /**
  * Find char that matches left and right string.
- *
- * @throws IllegalArgumentException
  */
 fun matchingChar(left: String, right: String): Char {
-
-    left.forEach { leftChar ->
-        if (right.contains(leftChar)) {
-            return leftChar
-        }
-    }
-    throw IllegalArgumentException("No Matches found")
+    return left.toCharArray().intersect(right.toCharArray().toSet()).first()
 }
 
 /**
@@ -69,15 +59,12 @@ fun day3Task2(input: String): Int {
 
 /**
  * Find char that is in all 3 lines, and return that priority
- *
- * @throws IllegalArgumentException
  */
 fun priorityValueOfGroupOfThree(groupOfThree: List<String>): Int {
 
-    groupOfThree[0].forEach { char ->
-        if (groupOfThree[1].contains(char) && groupOfThree[2].contains(char)) {
-            return priorityValueOfChar(char)
-        }
-    }
-    throw IllegalArgumentException("No Matches found")
+    val char = groupOfThree[0].toCharArray()
+        .intersect(groupOfThree[1].toCharArray().toSet())
+        .intersect(groupOfThree[2].toCharArray().toSet()).first()
+
+    return priorityValueOfChar(char)
 }
