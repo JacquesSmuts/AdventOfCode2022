@@ -21,7 +21,7 @@ class Day1Test {
     }
 }
 
-object Inputs {
+private object Inputs {
     const val testInput = """1000
 2000
 3000

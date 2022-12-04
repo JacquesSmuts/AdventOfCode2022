@@ -3,8 +3,7 @@
  */
 fun day3Task1(input: String): Int {
 
-    return input.replace("\r", "")
-        .split("\n")
+    return input.splitByLine()
         .sumOf {  line ->
             priorityValueOfLine(line)
         }
@@ -48,8 +47,7 @@ fun matchingChar(left: String, right: String): Char {
  */
 fun day3Task2(input: String): Int {
 
-    return input.replace("\r", "")
-        .split("\n")
+    return input.splitByLine()
         .chunked(3)
         .sumOf { groupOfThree ->
             priorityValueOfGroupOfThree(groupOfThree)

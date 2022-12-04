@@ -61,8 +61,7 @@ fun moveLetterToMoveNumber(it: String): Int {
  */
 fun day2Task2(input: String): Int {
 
-    return input.replace("\r", "")
-        .split("\n")
+    return input.splitByLine()
         .sumOf {
             scoreOfMatchTask2(it)
         }

@@ -21,10 +21,10 @@ class Day2Test {
         val realInput = Day2Test::class.java.getResource("inputs/Day2.txt")!!.readText()
         assertEquals(11373, day2Task2(realInput))
     }
-}
 
-object Day2Inputs {
-    const val testInput = """A Y
+    private object Day2Inputs {
+        const val testInput = """A Y
 B X
 C Z"""
+    }
 }

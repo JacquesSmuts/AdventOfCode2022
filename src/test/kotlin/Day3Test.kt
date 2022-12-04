@@ -21,13 +21,13 @@ class Day3Test {
         val realInput = Day2Test::class.java.getResource("inputs/Day3.txt")!!.readText()
         assertEquals(2708, day3Task2(realInput))
     }
-}
 
-object Day3Inputs {
-    const val testInput = """vJrwpWtwJgWrhcsFMMfFFhFp
+    private object Day3Inputs {
+        const val testInput = """vJrwpWtwJgWrhcsFMMfFFhFp
 jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
 PmmdzqPrVvPwwTWBwg
 wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
 ttgJtRGJQctTZtZT
 CrZsJsPPZsGzwwsLwLmpwMDw"""
+    }
 }
