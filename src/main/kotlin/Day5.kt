@@ -1,21 +1,25 @@
 /**
  * https://adventofcode.com/2022/day/5
  */
-fun day5Task1(input: String): String {
+fun day5Task1(input: String, shouldReverse: Boolean = true): String {
 
     val inputSplit = input.replace("\r", "").split("\n\n")
 
     val mutableBoxesMap = parseBoxes(inputSplit[0])
 
     inputSplit[1].splitByLine().forEach {
-        parseMove(mutableBoxesMap, it)
+        parseMove(mutableBoxesMap, it, shouldReverse)
     }
 
     return (0 until mutableBoxesMap.size).map {
         mutableBoxesMap[it]!!.last()
     }.joinToString("")
-
 }
+
+/**
+ * https://adventofcode.com/2022/day/5#part2
+ */
+fun day5Task2(input: String): String = day5Task1(input, false)
 
 /**
  *             [J]             [B] [W]
@@ -41,45 +45,17 @@ fun parseBoxes(boxes: String): MutableMap<Int, List<Char>> {
 /**
  * move 2 from 8 to 9
  */
-fun parseMove(mutableBoxesMap: MutableMap<Int, List<Char>>, move: String) {
+fun parseMove(mutableBoxesMap: MutableMap<Int, List<Char>>, move: String, shouldReverse: Boolean) {
+
     val instructionsList = Regex("/?(\\d+)").findAll(move).map { it.value.toInt() }.toList()
     val amount = instructionsList[0]
     val moveFrom = instructionsList[1]-1 // Because we're using 0-index and they're not
     val moveTo = instructionsList[2]-1 // Because we're using 0-index and they're not
     val charsToRemove = mutableBoxesMap[moveFrom]!!.takeLast(amount)
+
     mutableBoxesMap[moveFrom] = mutableBoxesMap[moveFrom]!!.dropLast(amount)
-    mutableBoxesMap[moveTo] = mutableBoxesMap[moveTo]!!.plus(charsToRemove.reversed())
+    mutableBoxesMap[moveTo] = mutableBoxesMap[moveTo]!!.plus(
+        if (shouldReverse) charsToRemove.reversed() else charsToRemove
+    )
 }
 
-
-/**
- * move 2 from 8 to 9
- */
-fun parseMove2(mutableBoxesMap: MutableMap<Int, List<Char>>, move: String) {
-    val instructionsList = Regex("/?(\\d+)").findAll(move).map { it.value.toInt() }.toList()
-    val amount = instructionsList[0]
-    val moveFrom = instructionsList[1]-1 // Because we're using 0-index and they're not
-    val moveTo = instructionsList[2]-1 // Because we're using 0-index and they're not
-    val charsToRemove = mutableBoxesMap[moveFrom]!!.takeLast(amount)
-    mutableBoxesMap[moveFrom] = mutableBoxesMap[moveFrom]!!.dropLast(amount)
-    mutableBoxesMap[moveTo] = mutableBoxesMap[moveTo]!!.plus(charsToRemove)
-}
-
-
-/**
- * https://adventofcode.com/2022/day/5#part2
- */
-fun day5Task2(input: String): String {
-
-    val inputSplit = input.replace("\r", "").split("\n\n")
-
-    val mutableBoxesMap = parseBoxes(inputSplit[0])
-
-    inputSplit[1].splitByLine().forEach {
-        parseMove2(mutableBoxesMap, it)
-    }
-
-    return (0 until mutableBoxesMap.size).map {
-        mutableBoxesMap[it]!!.last()
-    }.joinToString("")
-}
