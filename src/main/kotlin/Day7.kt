@@ -12,7 +12,7 @@ fun day7Task1(input: String): Long {
 fun day7Task2(input: String): Long {
 
     val root = createDirFromCommandList(input)
-    val unusedSpaceNeeded = 30000000L - (70000000L - root.size)
+    val unusedSpaceNeeded = 30_000_000L - (70_000_000L - root.size)
     return root.listOfSizes.sorted().first { it > unusedSpaceNeeded }
 }
 
