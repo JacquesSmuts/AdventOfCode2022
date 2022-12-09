@@ -1,4 +1,5 @@
 import kotlin.math.abs
+import kotlin.math.sign
 
 /**
  * https://adventofcode.com/2022/day/9
@@ -14,7 +15,7 @@ fun day9Task2(input: String): Int {
 
 fun trackTailHistory(input: String, ropeLength: Int = 2): Int {
 
-    val ropePosList = generateSequence { 0 to 0 }.take(ropeLength).toMutableList()
+    val ropePosList = MutableList(ropeLength) { 0 to 0 }
     val tPosHistory = mutableSetOf<Pair<Int, Int>>()
 
     input.splitByLine().forEach { line ->
@@ -26,7 +27,7 @@ fun trackTailHistory(input: String, ropeLength: Int = 2): Int {
                 if (index == 0) {
                     ropePosList[index] = moveHead(pos, move)
                 } else {
-                    ropePosList[index] = moveTail(ropePosList[index - 1], pos)
+                    ropePosList[index] = followLeader(ropePosList[index - 1], pos)
                 }
             }
             tPosHistory.add(ropePosList.last())
@@ -46,24 +47,15 @@ fun moveHead(pos: Pair<Int,Int>, move: Move): Pair<Int, Int> {
     }
 }
 
-fun moveTail(leader: Pair<Int, Int>, follower: Pair<Int, Int>): Pair<Int,Int> {
-    val (hx, hy) = leader
-    val (tx, ty) = follower
+fun followLeader(leader: Pair<Int, Int>, follower: Pair<Int, Int>): Pair<Int,Int> {
 
-    return when {
-        // Touching. Do nothing.
-        abs(hx-tx) <=1 && abs(hy-ty) <= 1 -> follower
-        // 2 units to the side, in the same line. Move 1 in that direction
-        hy==ty && (hx - tx) >= 2 -> tx+1 to ty
-        hy==ty && (tx - hx) >= 2 -> tx-1 to ty
-        hx==tx && (hy - ty) >= 2 -> tx to ty+1
-        hx==tx && (ty - hy) >= 2 -> tx to ty-1
-        // diagonal move, move 1 in both x and y towards leader
-        else -> {
-            val xOp = if (hx > tx) 1 else -1
-            val yOp = if (hy > ty) 1 else -1
-            tx+xOp to ty + yOp
-        }
+    val (lx, ly) = leader
+    val (fx, fy) = follower
+
+    return if (abs(lx-fx) <=1 && abs(ly-fy) <= 1) {
+        follower
+    } else {
+        fx + (lx - fx).sign to fy + (ly - fy).sign
     }
 }
 
