@@ -37,17 +37,13 @@ fun trackTailHistory(input: String, ropeLength: Int = 2): Int {
     return tPosHistory.size
 }
 
-fun moveHead(pos: Pair<Int,Int>, move: Move): Pair<Int, Int> {
+private fun moveHead(pos: Pair<Int,Int>, move: Move): Pair<Int, Int> {
     val (x, y) = pos
-    return when (move) {
-        is Move.Down -> x to y-1
-        is Move.Left -> x-1 to y
-        is Move.Right -> x+1 to y
-        is Move.Up -> x to y+1
-    }
+    val (vx, vy) = move.vector
+    return (x + vx to y+vy)
 }
 
-fun followLeader(leader: Pair<Int, Int>, follower: Pair<Int, Int>): Pair<Int,Int> {
+private fun followLeader(leader: Pair<Int, Int>, follower: Pair<Int, Int>): Pair<Int,Int> {
 
     val (lx, ly) = leader
     val (fx, fy) = follower
@@ -59,11 +55,11 @@ fun followLeader(leader: Pair<Int, Int>, follower: Pair<Int, Int>): Pair<Int,Int
     }
 }
 
-sealed class Move(val distance: Int) {
-    class Up(distance: Int): Move(distance)
-    class Down(distance: Int): Move(distance)
-    class Left(distance: Int): Move(distance)
-    class Right(distance: Int): Move(distance)
+private sealed class Move(val distance: Int, val vector: Pair<Int, Int>) {
+    class Up(distance: Int): Move(distance, 0 to 1)
+    class Down(distance: Int): Move(distance, 0 to -1)
+    class Left(distance: Int): Move(distance, -1 to 0)
+    class Right(distance: Int): Move(distance, 1 to 0)
 
     companion object {
 
