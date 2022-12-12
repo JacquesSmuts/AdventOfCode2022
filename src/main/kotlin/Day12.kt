@@ -12,7 +12,7 @@ fun day12Task1(input: String): Int {
     val width = map.width
     println()
     map.heightMap.forEach {
-        print(if (it in shortestPath) "X" else ".")
+        print(if (it in shortestPath) Char(it.z+97) else ".")
         if ((it.x+1) % width == 0) {
             println()
         }
@@ -21,6 +21,22 @@ fun day12Task1(input: String): Int {
     return shortestPath.size -1
 }
 
+fun day12Task2(input: String): Int {
+
+    val initialMap = MapData.parse(input)
+
+    val allPossibleMaps = initialMap.heightMap.filter { it.z == 0 }.map {
+        MapData(
+            startingCoordinates = it,
+            goalCoordinates = initialMap.goalCoordinates,
+            heightMap = initialMap.heightMap
+        )
+    }
+
+    return allPossibleMaps.minOf {
+        calculateShortestPath(it)?.size ?: Int.MAX_VALUE
+    } - 1
+}
 
 /**
  * Largely stolen from https://gist.github.com/EdwarDDay/2df9134bcc2fc09c842adc4bf6b74050
@@ -113,8 +129,8 @@ class MapData(
                                 0
                             }
                             'E' -> {
-                                goalCoordinates = HeightCoordinates(x,y,26)
-                                26
+                                goalCoordinates = HeightCoordinates(x,y,25)
+                                25
                             }
                             else -> char.code - 97
                         }
